@@ -1,0 +1,5 @@
+*/build
+*/report/build
+.vscode
+.history
+lab1/report/*.pdf

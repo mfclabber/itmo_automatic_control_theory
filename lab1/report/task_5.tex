@@ -1,0 +1,160 @@
+\section{Исследование управляемости по выходу}
+Рассмотрим систему 
+\begin{equation}
+    \begin{cases}
+        \dot{x} = Ax + Bu \\
+        y = Cx + Du 
+    \end{cases}
+\end{equation}
+где 
+\begin{equation}
+    \begin{array}{ccc}
+        A = \begin{bmatrix}
+            0 & 4 & 2 \\
+            -4 & -8 & -4 \\
+            4 & 4 & 0
+        \end{bmatrix}, &
+        B = \begin{bmatrix}
+            3 \\
+            -1 \\
+            1
+        \end{bmatrix}, &
+        C = \begin{bmatrix}
+            0 & 3 & 3  \\ 
+            0 & 0 & 2 \\
+        \end{bmatrix} \\
+    \end{array}
+\end{equation}
+
+
+\subsection{Диагональная форма системы}
+Диагональную форму системы можно найти согласно следующим формулам:
+\begin{equation}
+    \begin{cases}
+        \dot{\hat{x}} = P^{-1}AP\hat{x} + P^{-1}Bu \\ 
+        y = CP\hat{x} + Du
+    \end{cases} 
+\end{equation}
+где $P$ -- матрица собственных векторов матрицы $A$.
+\begin{equation}
+    P = \begin{bmatrix}
+        -1 & \frac{1-j}{2} & \frac{1+j}{2} \\
+        1 & -1 & -1 \\
+        0 & 1 & 1
+    \end{bmatrix}
+\end{equation}
+
+Тогда система примет вид: 
+\begin{equation}
+    \begin{cases}
+        \dot{\hat{x}} = \begin{bmatrix}
+            -4 & 0 & 0 \\
+            0 & -2-2j & 0 \\
+            0 & 0 & -2+2j
+        \end{bmatrix} + \begin{bmatrix}
+            0 \\
+            0.5-2.5j \\
+            0.5+2.5j \\
+        \end{bmatrix} u \\ 
+        y = \begin{bmatrix}
+            3 & 0 & 0 \\
+            0 & 2 & 0 \\
+        \end{bmatrix} \hat{x} + Du 
+    \end{cases}
+    \label{eq:task4_diag}
+\end{equation}
+
+По системе в диагональной форме можно понять, что первое собственное число 
+не является управляемым, так как первый компонент вектора $P^{-1}B$ равен нулю. (см. п. 1.1.2) 
+
+При этом каждое из собственных чисел является наблюдаемым:
+
+\[
+\begin{cases}
+    \text{rank}\left(
+    \begin{bmatrix}
+    A - (-4) \cdot I \\
+    C
+    \end{bmatrix}
+    \right) = 3 \\
+    \text{rank}\left(
+    \begin{bmatrix}
+    A - (-2 - 2i) \cdot I \\
+    C
+    \end{bmatrix}
+    \right) = 3 \\
+    \text{rank}\left(
+    \begin{bmatrix}
+    A - (-2 + 2i) \cdot I \\
+    C
+    \end{bmatrix}
+    \right) = 3
+\end{cases}
+\]
+
+
+
+\subsection{Управляемость по выходу}
+Для того, чтобы определить, является ои система управляемой по выходу, необходимо посмотреть на 
+матрицу управляемости по выходу $W_y$:
+\begin{equation}
+    \begin{array}{cc}
+        U_y = \begin{bmatrix}
+            CU & D
+        \end{bmatrix} & 
+        U = \begin{bmatrix}
+            A, & AB, & A^2B
+        \end{bmatrix} 
+    \end{array}
+\end{equation}
+Для данной системы при $D = 0_{2\times 1}$ матрица управляемости по выходу равна: 
+\begin{equation}
+    \begin{array}{cc}
+        U = \begin{bmatrix}
+            3  & -2  & -16 \\ 
+            -1  & -8  & 40 \\ 
+            1  & 8  & -40 \\ 
+        \end{bmatrix} &
+        U_y = \begin{bmatrix}
+            0  & 0  & 0  & 0  \\ 
+            2  & 16  & -80  & 0  \\ 
+        \end{bmatrix}
+    \end{array}
+\end{equation}
+Определим ранг матрицы $U_y$:
+\begin{equation}
+    \text{rank}(U_y) = 1
+\end{equation}
+Так как размерность выхода равна 2, то система не является управляемой по выходу. 
+
+Данная система не является полностью управляемой по выходу из-за того, что одно 
+из собственных чисел не является управляемым, при этом входит в выход, согласно 
+диагональной форме системы (см. систему \eqref{eq:task4_diag}).
+
+Для того, чтобы сделать систему управляемой по выходу, необходимо изменить матрицу 
+$D$ таким образом, чтобы выполнялся критерий управляемости по выходу, то есть, ранг 
+матрицы $U_y$ должен быть равен 2. 
+
+В данном случае подойдет любая ненулевая матрица $D$ размера $2\times 1$, например: 
+\begin{equation}
+    D = \begin{bmatrix}
+        1 \\
+        0 
+    \end{bmatrix}
+\end{equation}
+
+Тогда матрица управляемости по выходу будет равна:
+\begin{equation}
+    \hat{U}_y = \begin{bmatrix}
+        6  & -34  & 38  & 1 \\ 
+        -15  & 85  & -95  & 0 \\ 
+        \end{bmatrix}
+\end{equation}
+и ее ранг будет равен 2.
+
+\subsection{Вывод}
+В данном задании была рассмотрена \textit{полная} линейная система 
+в форме В-С-В. Была найдена диагональная форма системы, исследована управляемость
+по выходу и сделан вывод о том, что система не является управляемой по выходу. 
+При этом, данную систему можно сделать полностью управляемой по выходу, добавив
+ненулевую матрицу $D$ размера $2\times 1$. 

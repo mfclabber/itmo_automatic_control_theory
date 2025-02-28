@@ -1,0 +1,183 @@
+\section{Исследование наблюдаемости}
+
+Рассмотрим систему: 
+\begin{equation}
+    \begin{cases}
+        \dot{x} = Ax \\
+        y = Cx,
+    \end{cases}
+\end{equation}
+где 
+\begin{equation}
+    \begin{array}{cc}
+        A = \begin{bmatrix}
+            -8 & -3 & -12 \\
+            -3 & -2 & -6 \\
+            6 & 0 & 7
+        \end{bmatrix}, &
+        C = \begin{bmatrix}
+            1 & 0 & 2
+        \end{bmatrix}
+    \end{array}
+\end{equation}
+
+\subsection{Наблюдаемость системы}
+
+\subsubsection{Матрица наблюдаемости}
+Найдем матрицу наблюдаемости $W = [C, CA, CA^2]^T$: 
+\begin{equation}
+    W = \begin{bmatrix}
+        1  & 0  & 2 \\ 
+        4  & -3  & 2 \\ 
+        -11  & -6  & -16 \\ 
+    \end{bmatrix}
+\end{equation}
+Определим ранг матрицы наблюдаемости:
+\begin{equation}
+    \text{rank}(W) = 3
+\end{equation}
+Таким образом, система является полностью наблюдаемой.
+
+\subsubsection{Наблюдаемость собственных значений}
+
+Найдем спектр матрицы $A$:
+\begin{equation}
+    \sigma(A) = \{1, -2-3j, -2+3j\}
+\end{equation}
+
+Для каждого собственного значения найдем матрицу Хаутуса $H_i = [A - \lambda_i, C]^T$:
+\[
+\begin{cases}
+    \text{rank}\left(
+    \begin{bmatrix}
+    A - (1) \cdot I \\
+    C
+    \end{bmatrix}
+    \right) = 3 \\
+    \text{rank}\left(
+    \begin{bmatrix}
+    A - (-2 - 3i) \cdot I \\
+    C
+    \end{bmatrix}
+    \right) = 3 \\
+    \text{rank}\left(
+    \begin{bmatrix}
+    A - (-2 + 3i) \cdot I \\
+    C
+    \end{bmatrix}
+    \right) = 3
+\end{cases}
+\]
+
+Все собственные значения наблюдаемы, что сходится с результатом, полученным при анализе матрицы наблюдаемости.
+
+\subsubsection{Диагональная форма системы}
+Найдем диагональную форму системы:
+\begin{equation}
+    \begin{cases}
+        \dot{\hat{x}} = P^{-1}AP\hat{x}\\
+        y = CP\hat{x},
+    \end{cases}
+\end{equation}
+где $P$ -- матрица собственных векторов матрицы $A$. Найдем собственные векторы матрицы $A$:
+\begin{equation}
+    \begin{array}{ccc}
+        v_1 = \begin{bmatrix}
+            1 \\
+            0 \\
+            0
+        \end{bmatrix}, &
+        v_2 = \begin{bmatrix}
+            -1.5-0.5j \\
+            -1.5-0.5j \\
+            1
+        \end{bmatrix}, &
+        v_2 = \begin{bmatrix}
+            -1.5+0.5j \\
+            -1.5+0.5j \\
+            1
+        \end{bmatrix}
+    \end{array}
+\end{equation}
+Тогда матрица $P$:
+\begin{equation}
+    P = \begin{bmatrix}
+        -1 & -1.5-0.5j & -1.5+0.5j \\
+        -1 & -1.5-0.5j & -1.5+0.5j \\
+        1 & 0 & 0
+    \end{bmatrix}
+\end{equation}
+Система преобразуется к виду: 
+\begin{equation}
+    \begin{cases}
+        \dot{\hat{x}} = \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & -2-5j & 0 \\
+            0 & 0 & -2+5j
+        \end{bmatrix} \hat{x} \\ 
+        y = \begin{bmatrix}
+            1 & 0.5-0.5j & 0.5+0.5j
+        \end{bmatrix} \hat{x}
+    \end{cases}
+\end{equation}
+Так как все элементы матрицы $CP$ не равны нулю, система является полностью наблюдаемой. 
+
+\subsection{Грамиан наблюдаемости}
+Найдем грамиан наблюдаемости $Q(t_1)$:
+\begin{equation}
+    Q(t_1) = \int_0^{t_1} e^{A^Tt}C^TCe^{At}dt
+\end{equation}
+Вычислим грамиан наблюдаемости для $t_1 = 3$:
+\begin{equation}
+    Q(3) = \begin{bmatrix}
+        201.93  & -201.36  & 202.09 \\ 
+        -201.36  & 201.16  & -201.30 \\ 
+        202.09  & -201.30  & 202.42 \\ 
+        \end{bmatrix}
+\end{equation}
+
+Найдем собственные числа грамиана наблюдаемости:
+\begin{equation}
+    \sigma(Q(3)) = \{0.007, 0.0605, 0.0492\}
+\end{equation}
+Все собственные числа грамиана наблюдаемости положительны, что говорит о том, что система является наблюдаемой.
+
+\subsection{Наблюдение системы}
+Будем считать, что выход системы соответствует функции $y(t)$:
+\begin{equation}
+    y(t) = e^{-2t} \sin(3t) +2e^{-2t} \cos(3t) 
+\end{equation}
+Найдем начальные условия $x(0)$ такие, чтобы выход системы совпадал с функцией $y(t)$:
+\begin{equation}
+    x(0) = Q(t_1)^{-1} \int_0^{t_1} e^{A^Tt}C^Ty(t)dt
+\end{equation}
+Получаем вектор начальных условий:
+\begin{equation}
+    x(0) = \begin{bmatrix}
+        0 & 1 & 1
+    \end{bmatrix}^T
+\end{equation}
+
+Проведем моделирование системы с начальными условиями $x(0)$ и входом $u(t) = 0$: 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../plots/task_3_1.png}
+    \caption{Состояния системы}
+    \label{fig:task3_states}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../plots/task_3_2.png}
+    \caption{Выход системы}
+    \label{fig:task3_output}
+\end{figure}
+
+\subsection{Вывод}
+При исследовании системы, рассматриваемой в этом задании, удалось показать,
+что она является полностью наблюдаемой. Это было продемонстрировано с помощью
+матрицы наблюдаемости, через наблюдаемость собственных значений и диагональную
+форму системы. Также был найден грамиан наблюдаемости и проверены его собственные
+числа. Проведено моделирование системы с начальными условиями, при которых выход
+системы совпадает с заданной функцией. Результаты моделирования показали, что
+система наблюдаема и наблюдение работает корректно.
