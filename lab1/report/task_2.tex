@@ -9,15 +9,15 @@
             -6 & 4 & -7
         \end{bmatrix}, &
         B = \begin{bmatrix}
-            -3 \\
-            -1 \\
-            1
+            2 \\
+            0 \\
+            0
         \end{bmatrix}, &
         x_1' = \begin{bmatrix}
-            -8 & 3 & 0
+            5 & 3 & -3
         \end{bmatrix},
         x_1'' = \begin{bmatrix}
-            -4 & 0 & 0
+            4 & 3 & -2
         \end{bmatrix},
     \end{array}
 \end{equation}
@@ -29,9 +29,9 @@
     U = \begin{bmatrix} 
         \begin{array}{c|c|c}
             \begin{bmatrix}
-                -3 \\
-                -1 \\
-                1
+                2 \\
+                0 \\
+                0
             \end{bmatrix} & 
             \begin{bmatrix}
                 7 & -7 & 8 \\
@@ -39,9 +39,9 @@
                 -6 & 4 & -7
             \end{bmatrix} \times 
             \begin{bmatrix}
-                -3 \\
-                -1 \\
-                1
+                2 \\
+                0 \\
+                0
             \end{bmatrix} &
             \begin{bmatrix}
                 7 & -7 & 8 \\
@@ -49,9 +49,9 @@
                 -6 & 4 & -7
             \end{bmatrix}^2 \times
             \begin{bmatrix}
-                -3 \\
-                -1 \\
-                1
+                2 \\
+                0 \\
+                0
             \end{bmatrix}
         \end{array}   
     \end{bmatrix}
@@ -131,14 +131,14 @@
 \begin{equation}
     \begin{array}{cc}
         x_1' = \begin{bmatrix}
-            -8 \\
-            3 \\
-            0
+            5 \\
+            -3 \\
+            3
         \end{bmatrix}, &
         x_1'' = \begin{bmatrix}
-            -4 \\
-            0 \\
-            0
+            4 \\
+            3 \\
+            -2
         \end{bmatrix}
     \end{array}
 \end{equation}
@@ -169,14 +169,14 @@
 Таким образом, можно сделать вывод, что точка $x_1''$ принадлежит управляемому подпространству, а точка $x_1'$ не принадлежит. В дальнейшем будем обозначать $x_1''$ как $x_1$.
 
 \subsection{Управление системой}
-Найдем управление $u(t)$, которое будет переводить систему из состояния $x(0) = 0$ в состояние $x_1 = x(t_1) = \begin{bmatrix} -8 & 3 & 0 \end{bmatrix}^T$. 
+Найдем управление $u(t)$, которое будет переводить систему из состояния $x(0) = 0$ в состояние $x_1 = x(t_1) = \begin{bmatrix} 5 & 3 & -3 \end{bmatrix}^T$. 
 \begin{equation}
     u(t) = B^Te^{A^T(t_1 - t)}P(t_1)^{-1}x_1
 \end{equation}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{../../plots/task_2_1.png}
+    \includegraphics[width=\textwidth]{../../plots/task_2_1.png}
     \caption{Управление системой}
     \label{fig:task2_control_signal}
 \end{figure}
