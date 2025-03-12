@@ -2,4 +2,4 @@
 */report/build
 .vscode
 .history
-lab1/report/*.pdf
+*/report/*.pdf
